@@ -24,7 +24,6 @@ def read(*parts):
 
 install_requires = [
     'Django>=1.6,<1.11',
-    'django-csp==3.1',
     'pynacl==1.0.1'
 ]
 
@@ -35,7 +34,8 @@ test_requires = [
     'pytest-flakes==1.0.1',
     'pytest-pep8==1.0.6',
     'pep8==1.4.6',
-    'mock==1.0.1'
+    'mock==1.0.1',
+    'django-csp==3.1',
 ]
 
 

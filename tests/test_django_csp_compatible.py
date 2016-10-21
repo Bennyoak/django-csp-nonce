@@ -6,20 +6,12 @@
     all is good
 """
 
-import pytest
 from django.http import HttpResponse
 from django.test import RequestFactory
 from django.test.utils import override_settings
 
-
 from csp_nonce.middleware import CSPNonceMiddleware
-
-# Ditch the test if djano-csp isn't found
-try:
-    from csp.middleware import CSPMiddleware
-except ImportError:
-    pytest.mark.skip(reason="Django-csp not found.")
-
+from csp.middleware import CSPMiddleware
 
 HEADER = "Content-Security-Policy"
 
@@ -33,13 +25,12 @@ def test_csp_compatible():
     request = rf.get('/')
     nmw.process_request(request)
     assert getattr(request, 'script_nonce', None)
-    
+
     response = HttpResponse()
     mw.process_response(request, response)
     nmw.process_response(request, response)
 
     assert request.script_nonce in response[HEADER]
-
 
 
 @override_settings(CSP_NONCE_SCRIPT=True)
@@ -48,7 +39,7 @@ def test_csp_exempt_compatible():
     request = rf.get('/')
     nmw.process_request(request)
     assert getattr(request, 'script_nonce', None)
-    
+
     response = HttpResponse()
     response._csp_exempt = True
     mw.process_response(request, response)

@@ -11,4 +11,6 @@ django_csp_nonce.egg-info/requires.txt
 django_csp_nonce.egg-info/top_level.txt
 tests/__init__.py
 tests/settings.py
-tests/tests.py
+tests/test_context_processors.py
+tests/test_csp_nonce.py
+tests/test_django_csp_compatible.py

@@ -42,7 +42,6 @@ class CSPNonceMiddleware(object):
 
                 return False
 
-
             header = _get_header()
 
             if not header:
@@ -50,21 +49,24 @@ class CSPNonceMiddleware(object):
 
             script = getattr(request, 'script_nonce', None)
             style = getattr(request, 'style_nonce', None)
-            
+
             patt = re.compile(r"\b(script|style)-src\s(.*?)(?=;)")
 
             search = re.findall(patt, header['csp'])
-            
+
             if search:
                 nc = " 'nonce-{}'"
                 for (a, b) in search:
                     if a == 'script':
-                        header['csp'] = header['csp'].replace(b, b + nc.format(script))
+                        header['csp'] = header['csp'].replace(
+                            b, b + nc.format(script)
+                        )
                     if a == 'style':
-                        header['csp'] = header['csp'].replace(b, b + nc.format(style))
+                        header['csp'] = header['csp'].replace(
+                            b, b + nc.format(style)
+                        )
 
                 if header:
                     response[header['name']] = header['csp']
 
             return response
-

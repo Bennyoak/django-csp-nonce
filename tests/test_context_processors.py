@@ -18,4 +18,3 @@ def test_context_processor():
     ctx_style = nonce(request)['CSP_NONCE.style']
     assert ctx_script == 'nonce="{}"'.format(request.script_nonce)
     assert ctx_style == 'nonce="{}"'.format(request.style_nonce)
-
