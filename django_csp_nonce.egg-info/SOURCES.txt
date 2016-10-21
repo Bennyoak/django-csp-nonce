@@ -1,0 +1,14 @@
+setup.cfg
+csp_nonce/__init__.py
+csp_nonce/context_processors.py
+csp_nonce/middleware.py
+csp_nonce/utils.py
+django_csp_nonce.egg-info/PKG-INFO
+django_csp_nonce.egg-info/SOURCES.txt
+django_csp_nonce.egg-info/dependency_links.txt
+django_csp_nonce.egg-info/not-zip-safe
+django_csp_nonce.egg-info/requires.txt
+django_csp_nonce.egg-info/top_level.txt
+tests/__init__.py
+tests/settings.py
+tests/tests.py

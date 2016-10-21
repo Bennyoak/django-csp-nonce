@@ -1,0 +1,2 @@
+csp_nonce
+tests

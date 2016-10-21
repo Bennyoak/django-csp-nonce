@@ -1,0 +1,24 @@
+Metadata-Version: 1.1
+Name: django-csp-nonce
+Version: 3.1
+Summary: Nonce support for Django-CSP.
+Home-page: http://github.com/SpiderOak/django-csp-nonce
+Author: Bennyoak
+Author-email: benny@spideroak.com
+License: MIT
+Description: # Django-CSP-Nonce
+        
+Platform: UNKNOWN
+Classifier: Environment :: Web Environment
+Classifier: Programming Language :: Python
+Classifier: Operating System :: OS Independent
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Framework :: Django
