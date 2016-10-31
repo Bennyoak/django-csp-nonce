@@ -1,14 +1,13 @@
-"""
-    These tests are just to make sure I say out of the way
+""" These tests are just to make sure I say out of the way
     of django-csp processing.
     My assertion is that if I'm out of the way of the
-    stantard build process and I respect _cso_exempt,
-    all is good
-"""
+    standard build process and I respect _csp_exempt,
+    all is good """
 
 from django.http import HttpResponse
 from django.test import RequestFactory
 from django.test.utils import override_settings
+
 
 from csp_nonce.middleware import CSPNonceMiddleware
 from csp.middleware import CSPMiddleware

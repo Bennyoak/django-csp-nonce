@@ -1,4 +1,4 @@
-from django.http import HttpResponse  # , HttpResponseServerError
+from django.http import HttpResponse
 from django.test import RequestFactory
 from django.test.utils import override_settings
 
@@ -16,6 +16,7 @@ rf = RequestFactory()
 
 @override_settings(CSP_NONCE_SCRIPT=True)
 def test_nonce_request():
+    """ Assert nonce sent to request """
     nmw = CSPNonceMiddleware()
     request = rf.get('/')
     nmw.process_request(request)
@@ -24,6 +25,7 @@ def test_nonce_request():
 
 @override_settings(CSP_NONCE_SCRIPT=True)
 def test_script_nonce_response():
+    """ Script nonce gets pushed to response header """
     nmw = CSPNonceMiddleware()
     request = rf.get('/')
     nmw.process_request(request)
@@ -36,6 +38,7 @@ def test_script_nonce_response():
 
 @override_settings(CSP_NONCE_STYLE=True)
 def test_style_nonce_response():
+    """ Style nonce gets pushed to response header """
     nmw = CSPNonceMiddleware()
     request = rf.get('/')
     nmw.process_request(request)
@@ -48,6 +51,7 @@ def test_style_nonce_response():
 
 @override_settings(CSP_NONCE_STYLE=True, CSP_NONCE_SCRIPT=True)
 def test_all_nonce_response():
+    """ Assert both nonce cases are passed """
     nmw = CSPNonceMiddleware()
     request = rf.get('/')
     nmw.process_request(request)
@@ -60,6 +64,8 @@ def test_all_nonce_response():
 
 
 def test_empty_nonce_response():
+    """ Nonce middleware stays out of
+        the way if not called """
     nmw = CSPNonceMiddleware()
     request = rf.get('/')
     nmw.process_request(request)
