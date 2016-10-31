@@ -1,7 +1,7 @@
 from csp_nonce import utils
 
 
-def test_nonce_genereated():
+def test_nonce_generated():
     nonce = utils.generate_nonce()
     assert nonce is not None
 

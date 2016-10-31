@@ -19,7 +19,8 @@ class CSPNonceMiddleware(object):
             request.style_nonce = generate_nonce()
 
     def process_response(self, request, response):
-            """ Append availabe nonce hashes to their respective directives """
+            """ Append available nonce hashes to
+                their respective directives """
             header = get_header(response)
 
             if not header:

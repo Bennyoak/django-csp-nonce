@@ -10,7 +10,7 @@ def generate_nonce():
 
 
 def get_header(response):
-    """ Check for CSP header type. Retrun dict with header and values """
+    """ Check for CSP header type. Return dict with header and values """
     policies = [
         "Content-Security-Policy",
         "Content-Security-Policy-Report-Only"

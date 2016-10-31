@@ -9,7 +9,7 @@ HEADER = 'Content-Security-Policy'
 CSP = "default-src 'self'; " \
     + "script-src 'self' https://cdn.trusted-example.com 'unsafe-eval'; " \
     + "img-src 'self' *.trusted-example.com data:; " \
-    + "style-src 'self', 'unasfe-inline'; "
+    + "style-src 'self', 'unsafe-inline'; "
 
 rf = RequestFactory()
 
