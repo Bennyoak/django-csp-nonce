@@ -41,8 +41,6 @@ class CSPNonceMiddleware(object):
                         header['csp'] = header['csp'].replace(
                             b, b + " 'nonce-{}'".format(nonce_request[a])
                         )
-
-                if header:
-                    response[header['name']] = header['csp']
+                response[header['name']] = header['csp']
 
             return response

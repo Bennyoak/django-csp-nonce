@@ -21,7 +21,7 @@ def get_header(response):
             name = p
             csp = response[p]
             return {'name': name, 'csp': csp}
-        except:
+        except KeyError:
             continue
 
     return False

@@ -73,3 +73,16 @@ def test_empty_nonce_response():
     response = HttpResponse()
     nmw.process_response(request, response)
     assert HEADER not in response
+
+
+@override_settings(CSP_NONCE_SCRIPT=True)
+def test_unique_nonce_per_request():
+    """ Make sure request gets a new nonce """
+    nmw = CSPNonceMiddleware()
+    request1 = rf.get('/')
+    nmw.process_request(request1)
+
+    request2 = rf.get('/')
+    nmw.process_request(request2)
+
+    assert request1.script_nonce != request2.script_nonce

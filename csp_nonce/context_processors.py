@@ -11,9 +11,12 @@ Usage:
 
 
 def nonce(request):
+    """ Pass the nonce cases to their respective template calls """
     script = getattr(request, 'script_nonce', None)
     style = getattr(request, 'style_nonce', None)
 
+    # This specifically returns "None" in the template
+    # as a reminder to activate the nonce in settings or remove tag.
     return {
         'CSP_NONCE.script': 'nonce="{}"'.format(script),
         'CSP_NONCE.style': 'nonce="{}"'.format(style),
