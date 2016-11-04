@@ -9,6 +9,8 @@ CSP header, then make the nonce(s) accessible to the templates via the Django Co
 DCN stays out of the way of [Django-CSP](http://django-csp.readthedocs.io/en/latest/) and can operate  
 independently with any method of CSP insertion that passes through Django Middleware.
 
+## Disclosure
+This code has not been through a third party security audit.
 
 ## Installation
 
@@ -73,6 +75,3 @@ As you work on your templates, pull in your specific nonce from the context:
 
 - PyNacl
 - Django
-
-## Disclosure
-This code has not been through a third party security audit.
