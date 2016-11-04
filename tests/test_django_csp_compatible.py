@@ -18,6 +18,9 @@ mw = CSPMiddleware()
 rf = RequestFactory()
 
 
+# TODO: Rearrange tests to make sure it stays
+# out of the way of django-csp latest
+
 @override_settings(CSP_NONCE_SCRIPT=True)
 def test_csp_compatible():
     nmw = CSPNonceMiddleware()
@@ -45,6 +48,3 @@ def test_csp_exempt_compatible():
     nmw.process_response(request, response)
 
     assert HEADER not in response
-
-# TODO: Rearrange tests to make sure it stays
-# out of the way of django-csp latest 
