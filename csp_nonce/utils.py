@@ -6,7 +6,7 @@ import nacl.utils
 def generate_nonce():
     """ Return a unique base64 encoded nonce hash """
     nonce = nacl.utils.random(nacl.secret.SecretBox.NONCE_SIZE)
-    return base64.b64encode(nonce)
+    return str(base64.b64encode(nonce))
 
 
 def get_header(response):
