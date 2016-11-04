@@ -10,7 +10,8 @@ DCN stays out of the way of [Django-CSP](http://django-csp.readthedocs.io/en/lat
 independently with any method of CSP insertion that passes through Django Middleware.
 
 ## Disclosure
-This code has not been through a third party security audit.
+- This code has not been through a third party security audit.
+- Needs testing across python-verse
 
 ## Installation
 
