@@ -69,7 +69,7 @@ As you work on your templates, pull in your specific nonce from the context:
 *NOTE:* Make sure you use the `safe` templatetag!
 
 
-## Dependencies 
+## Dependencies
 
 - PyNacl
 - Django
