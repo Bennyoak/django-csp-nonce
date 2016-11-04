@@ -1,14 +1,29 @@
+sudo: false
+
 language: python
+
 python:
-  - "2.6"
-  - "2.7"
-  - "3.2"
-  - "3.3"
-  - "3.4"
-  - "3.5"
+  - '2.7'
+  - '3.4'
+  - '3.5'
+  - pypy
+
+env:
+  - DJANGO_VERSION=1.10.x
+  - DJANGO_VERSION=1.9.x
+  - DJANGO_VERSION=1.8.x
+  - DJANGO_VERSION=1.7.x
+  - DJANGO_VERSION=1.6.x
+
+matrix:
+  exclude:
+    - python: '3.5'
+      env: DJANGO_VERSION=1.7.x
+    - python: '3.5'
+      env: DJANGO_VERSION=1.6.x
 
 install:
-  - pip install -e .
-  - pip install -e .[tests]
+  - pip install tox
 
-script: py.test
+script:
+  - tox -e "$TRAVIS_PYTHON_VERSION-$DJANGO_VERSION"
