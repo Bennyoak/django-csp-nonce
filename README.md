@@ -1,4 +1,4 @@
-# Django-CSP-Nonce
+# Django-CSP-Nonce (beta)
 
 DCN is a Content-Security-Policy nonce injection support system for Django and CSP.
 
