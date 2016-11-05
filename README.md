@@ -1,5 +1,7 @@
 # Django-CSP-Nonce (beta)
 
+[![Build Status](https://travis-ci.org/SpiderOak/django-csp-nonce.svg?branch=master)](https://travis-ci.org/SpiderOak/django-csp-nonce)
+
 DCN is a Content-Security-Policy nonce injection support system for Django and CSP.
 
 It provides for on-the-fly nonce creation and deployment. Once installed, DCN will generate a unique nonce  
@@ -11,7 +13,6 @@ independently with any method of CSP insertion that passes through Django Middle
 
 ## Disclosure
 - This code has not been through a third party security audit.
-- Needs testing across python-verse
 
 ## Installation
 
