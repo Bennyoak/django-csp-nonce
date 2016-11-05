@@ -2,6 +2,13 @@ import re
 from .utils import generate_nonce, get_header
 from django.conf import settings
 
+try:
+    from django.utils.deprecation import MiddlewareMixin
+except ImportError:
+    class MiddlewareMixin(object):
+        """ Django 1.10 """
+        pass
+
 
 class CSPNonceMiddleware(object):
     """ Nonce Injection middleware for CSP. """

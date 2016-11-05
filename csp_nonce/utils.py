@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import base64
 import nacl.secret
 import nacl.utils
@@ -6,7 +7,7 @@ import nacl.utils
 def generate_nonce():
     """ Return a unique base64 encoded nonce hash """
     nonce = nacl.utils.random(nacl.secret.SecretBox.NONCE_SIZE)
-    return str(base64.b64encode(nonce))
+    return "{}".format(base64.b64encode(nonce))
 
 
 def get_header(response):
