@@ -12,12 +12,12 @@ CSP = "default-src 'self'; " \
     + "style-src 'self', 'unsafe-inline'; "
 
 rf = RequestFactory()
+nmw = CSPNonceMiddleware()
 
 
 @override_settings(CSP_NONCE_SCRIPT=True)
 def test_nonce_request():
     """ Assert nonce sent to request """
-    nmw = CSPNonceMiddleware()
     request = rf.get('/')
     nmw.process_request(request)
     assert getattr(request, 'script_nonce', None)
@@ -26,7 +26,6 @@ def test_nonce_request():
 @override_settings(CSP_NONCE_SCRIPT=True)
 def test_script_nonce_response():
     """ Script nonce gets pushed to response header """
-    nmw = CSPNonceMiddleware()
     request = rf.get('/')
     nmw.process_request(request)
 
@@ -39,7 +38,6 @@ def test_script_nonce_response():
 @override_settings(CSP_NONCE_STYLE=True)
 def test_style_nonce_response():
     """ Style nonce gets pushed to response header """
-    nmw = CSPNonceMiddleware()
     request = rf.get('/')
     nmw.process_request(request)
 
@@ -52,13 +50,13 @@ def test_style_nonce_response():
 @override_settings(CSP_NONCE_STYLE=True, CSP_NONCE_SCRIPT=True)
 def test_all_nonce_response():
     """ Assert both nonce cases are passed """
-    nmw = CSPNonceMiddleware()
     request = rf.get('/')
     nmw.process_request(request)
 
     response = HttpResponse()
     response[HEADER] = CSP
     nmw.process_response(request, response)
+    assert response[HEADER].count('nonce') == 2
     assert request.style_nonce in response[HEADER]
     assert request.script_nonce in response[HEADER]
 
@@ -66,7 +64,6 @@ def test_all_nonce_response():
 def test_empty_nonce_response():
     """ Nonce middleware stays out of
         the way if not called """
-    nmw = CSPNonceMiddleware()
     request = rf.get('/')
     nmw.process_request(request)
 
@@ -78,7 +75,6 @@ def test_empty_nonce_response():
 @override_settings(CSP_NONCE_SCRIPT=True)
 def test_unique_nonce_per_request():
     """ Make sure request gets a new nonce """
-    nmw = CSPNonceMiddleware()
     request1 = rf.get('/')
     nmw.process_request(request1)
 
@@ -86,3 +82,14 @@ def test_unique_nonce_per_request():
     nmw.process_request(request2)
 
     assert request1.script_nonce != request2.script_nonce
+
+
+@override_settings(CSP_NONCE_SCRIPT=True)
+def test_existing_nonce():
+    request = rf.get('/')
+    nmw.process_request(request)
+
+    response = HttpResponse()
+    response[HEADER] = "script-src 'self' 'nonce=123A/B+c'"
+
+    assert request.script_nonce not in response[HEADER]

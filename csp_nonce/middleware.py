@@ -1,6 +1,9 @@
-import re
-from .utils import generate_nonce, get_header
+import logging
+from .utils import generate_nonce, get_header, nonce_exists
 from django.conf import settings
+
+
+LOG = logging.getLogger(__name__)
 
 try:
     from django.utils.deprecation import MiddlewareMixin
@@ -10,19 +13,18 @@ except ImportError:
         pass
 
 
-class CSPNonceMiddleware(object):
+class CSPNonceMiddleware(MiddlewareMixin):
     """ Nonce Injection middleware for CSP. """
-
-    def __init__(self, *args, **kwargs):
-        self.csp_nonce_script = getattr(settings, 'CSP_NONCE_SCRIPT', None)
-        self.csp_nonce_style = getattr(settings, 'CSP_NONCE_STYLE', None)
 
     def process_request(self, request):
         """ Pack nonce hash for activated directive(s) into request """
-        if self.csp_nonce_script:
+        csp_nonce_script = getattr(settings, 'CSP_NONCE_SCRIPT', False)
+        csp_nonce_style = getattr(settings, 'CSP_NONCE_STYLE', False)
+
+        if csp_nonce_script:
             request.script_nonce = generate_nonce()
 
-        if self.csp_nonce_style:
+        if csp_nonce_style:
             request.style_nonce = generate_nonce()
 
     def process_response(self, request, response):
@@ -33,21 +35,25 @@ class CSPNonceMiddleware(object):
             if not header:
                 return response
 
+            has_nonce = nonce_exists(response)
+            if has_nonce:
+                LOG.error("Nonce already exists: {}".format(has_nonce))
+                return response
+
             nonce_request = {
                 'script':  getattr(request, 'script_nonce', None),
                 'style':  getattr(request, 'style_nonce', None)
             }
 
-            patt = re.compile(r"\b(script|style)-src\s(.*?)(?=;)")
+            csp_split = header['csp'].split(';')
+            new_csp = []
 
-            search = re.findall(patt, header['csp'])
+            for p in csp_split:
+                for x in ('script', 'style'):
+                    if p.lstrip().startswith(x) and nonce_request[x]:
+                        p += " 'nonce-{}'".format(nonce_request[x])
+                new_csp.append(p)
 
-            if search:
-                for (a, b) in search:
-                    if a in ('style', 'script'):
-                        header['csp'] = header['csp'].replace(
-                            b, b + " 'nonce-{}'".format(nonce_request[a])
-                        )
-                response[header['name']] = header['csp']
+            response[header['name']] = ";".join(new_csp)
 
             return response

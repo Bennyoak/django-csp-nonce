@@ -15,26 +15,27 @@ from csp.middleware import CSPMiddleware
 HEADER = "Content-Security-Policy"
 
 mw = CSPMiddleware()
+nmw = CSPNonceMiddleware()
 rf = RequestFactory()
 
 
 @override_settings(CSP_NONCE_SCRIPT=True)
 def test_csp_compatible():
-    nmw = CSPNonceMiddleware()
     request = rf.get('/')
     nmw.process_request(request)
     assert getattr(request, 'script_nonce', None)
 
     response = HttpResponse()
     mw.process_response(request, response)
-    nmw.process_response(request, response)
+    assert HEADER in response
 
+    nmw.process_response(request, response)
     assert request.script_nonce in response[HEADER]
+    assert response[HEADER].count('nonce') == 1
 
 
 @override_settings(CSP_NONCE_SCRIPT=True)
 def test_csp_exempt_compatible():
-    nmw = CSPNonceMiddleware()
     request = rf.get('/')
     nmw.process_request(request)
     assert getattr(request, 'script_nonce', None)

@@ -24,7 +24,7 @@ MIDDLEWARE_CLASSES = (
     [ ... ]
     'csp_nonce.middleware.CSPNonceMiddleware',
     # Make sure you put it *above* django-csp if you're using it
-    [ ...]
+    [ ... ]
 )
 ```
 
@@ -38,13 +38,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'csp_nonce.context_processors.nonce',
-                'django.contrib.auth.context_processors.auth',
-                'django.template.context_processors.debug',
-                'django.template.context_processors.i18n',
-                'django.template.context_processors.media',
-                'django.template.context_processors.static',
-                'django.template.context_processors.tz',
-                'django.contrib.messages.context_processors.messages',
+                [ ... ]
             ],
         },
     },
@@ -62,18 +56,21 @@ CSP_NONCE_STYLE = False  # True if you want to use it
 DCN takes care of nonce generation for you using [pynacl](https://github.com/pyca/pynacl).
 As you work on your templates, pull in your specific nonce from the context:
 ```django
-<script type="text/javascript" {{ CSP_NONCE.script|safe }}>
+<script type="text/javascript" {{ script_nonce }}>
 ...
 </script>
 
-<style {{ CSP_NONCE.style|safe }}>
+<style {{ style_nonce }}>
 ...
 </style>
 ```
-*NOTE:* Make sure you use the `safe` templatetag!
 
 
 ## Dependencies
 
 - PyNacl
 - Django
+
+
+## Known issues
+- Nonce sync breaks on `settings.DEBUG=True`
