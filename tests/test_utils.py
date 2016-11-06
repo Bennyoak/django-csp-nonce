@@ -1,4 +1,5 @@
 import unittest
+from django.http import HttpResponse
 from csp_nonce import utils
 
 
@@ -22,3 +23,17 @@ class TestUtils(unittest.TestCase):
         with self.assertRaises(KeyError):
             response['Content-Security-Policy']
             response['Content-Security-Policy-Report-Only']
+
+    def test_nonce_esists_script(self):
+        csp = "sctipt-src *.goof.com 'nonce-123/AB+C';" + \
+            "style-src 'self' 'unsafe-inline'"
+        response = HttpResponse()
+        response['Content-Security-Policy'] = csp
+        self.assertTrue(utils.nonce_exists(response))
+
+    def test_nonce_esists_style(self):
+        csp = "sctipt-src *.goof.com" + \
+            "style-src 'self' https://stuff.things.com 'nonce-123/AB+C';"
+        response = HttpResponse()
+        response['Content-Security-Policy'] = csp
+        self.assertTrue(utils.nonce_exists(response))

@@ -10,6 +10,26 @@ def generate_nonce():
     return "{}".format(base64.b64encode(nonce))
 
 
+def nonce_exists(response):
+    """ Check for preexisting nonce in style and script """
+    try:
+        csp = response['Content-Security-Policy']
+    except KeyError:
+        csp = response['Content-Security-Policy-Report-Only']
+
+    nonce_found = {}
+
+    if csp:
+        csp_split = csp.split(';')
+        for directive in csp_split:
+            if 'script-src' and 'nonce-' in directive:
+                nonce_found['script'] = directive
+            if 'style-src' and 'nonce-' in directive:
+                nonce_found['style'] = directive
+
+    return nonce_found
+
+
 def get_header(response):
     """ Check for CSP header type. Return dict with header and values """
     policies = [
@@ -17,12 +37,14 @@ def get_header(response):
         "Content-Security-Policy-Report-Only"
     ]
 
-    for p in policies:
+    try:
+        name = policies[0]
+        csp = response[policies[0]]
+    except KeyError:
         try:
-            name = p
-            csp = response[p]
-            return {'name': name, 'csp': csp}
+            name = policies[1]
+            csp = response[policies[1]]
         except KeyError:
-            continue
+            return False
 
-    return False
+    return {'name': name, 'csp': csp}

@@ -14,8 +14,8 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'csp',
     'csp_nonce',
+    'csp',
 )
 
 SECRET_KEY = 'csp-nonce-test-key'

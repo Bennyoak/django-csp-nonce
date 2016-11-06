@@ -4,7 +4,7 @@ import codecs
 from setuptools import setup, find_packages
 
 
-version = '1.0'
+version = '1.1.0'
 
 
 if sys.argv[-1] == 'publish':
@@ -35,7 +35,7 @@ test_requires = [
     'pytest-pep8==1.0.6',
     'pep8==1.4.6',
     'mock==1.0.1',
-    'django-csp==3.1',
+    'django-csp',  # always install the latest
 ]
 
 
