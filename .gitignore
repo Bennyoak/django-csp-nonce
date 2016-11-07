@@ -1,4 +1,7 @@
 *.pyc
 __pycache__
 .cache
+.tox
 *.egg*
+build
+dist
