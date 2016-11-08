@@ -4,12 +4,14 @@ import codecs
 from setuptools import setup, find_packages
 
 
-version = '1.1.0'
+version = '1.0b1'
 
 
 if sys.argv[-1] == 'publish':
-    os.system('python setup.py sdist upload')
-    os.system('python setup.py bdist_wheel upload')
+    register = "twine register dist/django-csp-nonce-{}py2.py3-none-any.whl" \
+        .format(version)
+    os.system(register)
+    os.system('twine upload dist/*')
     print('You probably want to also tag the version now:')
     print('  git tag -a %s -m "version %s"' % (version, version))
     print('  git push --tags')
@@ -42,8 +44,9 @@ test_requires = [
 setup(
     name='django_csp_nonce',
     version=version,
-    description='Nonce support for Content Security Policy.',
+    description='Nonce support for Content Security Policy in Django.',
     long_description=read('README.md'),
+    keywords="CSP Content Security Policy Nonce Django",
     author='Bennyoak',
     author_email='benny@spideroak.com',
     maintainer='Bennyoak',
@@ -71,7 +74,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: Implementation :: PyPy',
+        'Programming Language :: Python :: Implementation :: pypy',
         'Programming Language :: Python :: Implementation :: CPython',
         'Framework :: Django',
     ]
