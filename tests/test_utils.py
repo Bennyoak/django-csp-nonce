@@ -29,7 +29,7 @@ class TestUtils(unittest.TestCase):
             "style-src 'self' 'unsafe-inline'"
         response = HttpResponse()
         response['Content-Security-Policy'] = csp
-        self.assertTrue(utils.nonce_exists(response))
+        self.assertIsNotNone(utils.nonce_exists(response))
 
     def test_nonce_esists_style(self):
         csp = "sctipt-src *.goof.com" + \

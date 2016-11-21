@@ -22,9 +22,9 @@ def nonce_exists(response):
     if csp:
         csp_split = csp.split(';')
         for directive in csp_split:
-            if 'script-src' and 'nonce-' in directive:
+            if all(map(lambda p: p in directive, ['script-src', 'nonce-'])):
                 nonce_found['script'] = directive
-            if 'style-src' and 'nonce-' in directive:
+            if all(map(lambda p: p in directive, ['style-src', 'nonce-'])):
                 nonce_found['style'] = directive
 
     return nonce_found

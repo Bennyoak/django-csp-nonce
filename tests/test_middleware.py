@@ -90,6 +90,18 @@ def test_existing_nonce():
     nmw.process_request(request)
 
     response = HttpResponse()
-    response[HEADER] = "script-src 'self' 'nonce=123A/B+c'"
+    response[HEADER] = "script-src 'self' 'nonce-123A/B+c'"
+    nmw.process_response(request, response)
 
     assert request.script_nonce not in response[HEADER]
+
+
+@override_settings(CSP_NONCE_SCRIPT=True, CSP_FLAG_STRICT=True)
+def test_strict_dynamic_addition():
+    request = rf.get('/')
+    nmw.process_request(request)
+
+    response = HttpResponse()
+    response[HEADER] = CSP
+    nmw.process_response(request, response)
+    assert 'strict-dynamic' in response[HEADER]

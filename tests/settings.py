@@ -6,6 +6,7 @@ CSP_STYLE_SRC = ("'self'", "'unsafe-inline'", "*.styles.trustedurl.com")
 
 CSP_NONCE_SCRIPT = False
 CSP_NONCE_STYLE = False
+CSP_FLAG_STRICT = False
 
 
 INSTALLED_APPS = (
