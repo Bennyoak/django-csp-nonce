@@ -35,9 +35,9 @@ class CSPNonceMiddleware(MiddlewareMixin):
             if not header:
                 return response
 
-            has_nonce = nonce_exists(response)
-            if bool(has_nonce):
-                LOG.error("Nonce already exists: {}".format(has_nonce))
+            nonce_found, has_nonce = nonce_exists(response)
+            if has_nonce:
+                LOG.error("Nonce already exists: {}".format(nonce_found))
                 return response
 
             nonce_request = {
