@@ -24,16 +24,38 @@ class TestUtils(unittest.TestCase):
             response['Content-Security-Policy']
             response['Content-Security-Policy-Report-Only']
 
-    def test_nonce_esists_script(self):
-        csp = "sctipt-src *.goof.com 'nonce-123/AB+C';" + \
-            "style-src 'self' 'unsafe-inline'"
+    def test_nonce_exists_script(self):
+        csp = "script-src *.goof.com 'nonce-123/AB+C';" + \
+            " style-src 'self' 'unsafe-inline';"
         response = HttpResponse()
         response['Content-Security-Policy'] = csp
-        self.assertTrue(utils.nonce_exists(response))
+        nonce_found, has_nonce = utils.nonce_exists(response)
+        self.assertTrue(has_nonce)
+        self.assertEqual(
+            "script-src *.goof.com 'nonce-123/AB+C'",
+            nonce_found['script']
+        )
+        self.assertIsNone(nonce_found.get('style', None))
 
-    def test_nonce_esists_style(self):
-        csp = "sctipt-src *.goof.com" + \
-            "style-src 'self' https://stuff.things.com 'nonce-123/AB+C';"
+    def test_nonce_exists_style(self):
+        csp = "sctipt-src *.goof.com;" + \
+            " style-src 'self' https://stuff.things.com 'nonce-123/AB+C';"
         response = HttpResponse()
         response['Content-Security-Policy'] = csp
-        self.assertTrue(utils.nonce_exists(response))
+        nonce_found, has_nonce = utils.nonce_exists(response)
+        self.assertTrue(has_nonce)
+        self.assertEqual(
+            " style-src 'self' https://stuff.things.com 'nonce-123/AB+C'",
+            nonce_found['style']
+        )
+        self.assertIsNone(nonce_found.get('script', None))
+
+    def test_nonce_exists_empty(self):
+        csp = "default-src *.goof.com;" + \
+            " font-src 'self' https://stuff.things.com;"
+        response = HttpResponse()
+        response['Content-Security-Policy'] = csp
+        nonce_found, has_nonce = utils.nonce_exists(response)
+        self.assertFalse(has_nonce)
+        self.assertIsNone(nonce_found.get('script', None))
+        self.assertIsNone(nonce_found.get('style', None))

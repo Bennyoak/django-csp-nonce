@@ -35,15 +35,17 @@ class CSPNonceMiddleware(MiddlewareMixin):
             if not header:
                 return response
 
-            has_nonce = nonce_exists(response)
+            nonce_found, has_nonce = nonce_exists(response)
             if has_nonce:
-                LOG.error("Nonce already exists: {}".format(has_nonce))
+                LOG.error("Nonce already exists: {}".format(nonce_found))
                 return response
 
             nonce_request = {
                 'script':  getattr(request, 'script_nonce', None),
                 'style':  getattr(request, 'style_nonce', None)
             }
+
+            csp_flag_strict = getattr(settings, 'CSP_FLAG_STRICT', False)
 
             csp_split = header['csp'].split(';')
             new_csp = []
@@ -52,6 +54,8 @@ class CSPNonceMiddleware(MiddlewareMixin):
                 for x in ('script', 'style'):
                     if p.lstrip().startswith(x) and nonce_request[x]:
                         p += " 'nonce-{}'".format(nonce_request[x])
+                        if x == 'script' and csp_flag_strict:
+                            p += " 'strict-dynamic'"
                 new_csp.append(p)
 
             response[header['name']] = ";".join(new_csp)
