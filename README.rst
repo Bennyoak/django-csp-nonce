@@ -66,6 +66,7 @@ Finally, add DCN directives to settings:
 
     CSP_NONCE_SCRIPT = False  # True if you want to use it
     CSP_NONCE_STYLE = False  # True if you want to use it
+    CSP_FLAG_STRICT = False  # True to include strict-dynamic in CSP
 
 Usage
 -----
