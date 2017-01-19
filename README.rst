@@ -98,5 +98,5 @@ Known issues
 .. _Django-CSP: http://django-csp.readthedocs.io/en/latest/
 .. _pynacl: https://github.com/pyca/pynacl
 
-.. |Build Status| image:: https://travis-ci.org/SpiderOak/django-csp-nonce.svg?branch=master
-   :target: https://travis-ci.org/SpiderOak/django-csp-nonce
+.. |Build Status| image:: https://travis-ci.org/Bennyoak/django-csp-nonce.svg?branch=master
+   :target: https://travis-ci.org/Bennyoak/django-csp-nonce
