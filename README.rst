@@ -23,8 +23,6 @@ Disclosure
 -  This code has not been through a third party security audit.
 -  I’ve successfully tested this locally with ``pypy-5.4.1``. TravisCI
    has confirmed this doesn’t work with their version.
--  From their logs:
-   ``RuntimeError: PyNaCl is not compatible with PyPy < 2.6. Please upgrade PyPy to use this library.``
 
 Installation
 ------------
@@ -71,7 +69,7 @@ Finally, add DCN directives to settings:
 Usage
 -----
 
-DCN takes care of nonce generation for you using `pynacl`_. As you work
+DCN takes care of nonce generation for you. As you work
 on your templates, pull in your specific nonce from the context:
 
 .. code:: django
@@ -87,7 +85,6 @@ on your templates, pull in your specific nonce from the context:
 Dependencies
 ------------
 
--  PyNacl
 -  Django
 
 Known issues
@@ -96,7 +93,6 @@ Known issues
 -  Nonce sync breaks on ``settings.DEBUG=True``
 
 .. _Django-CSP: http://django-csp.readthedocs.io/en/latest/
-.. _pynacl: https://github.com/pyca/pynacl
 
 .. |Build Status| image:: https://travis-ci.org/Bennyoak/django-csp-nonce.svg?branch=master
    :target: https://travis-ci.org/Bennyoak/django-csp-nonce
