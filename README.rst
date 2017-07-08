@@ -96,3 +96,13 @@ Known issues
 
 .. |Build Status| image:: https://travis-ci.org/Bennyoak/django-csp-nonce.svg?branch=master
    :target: https://travis-ci.org/Bennyoak/django-csp-nonce
+
+
+Important Changes
+-----------------
+
+- 1.0
+  - Out of beta!
+  - PyNacl is no longer a dependency.  (Moving forward the aim is to
+    stay compatible with environments such as Google App Engine which
+    don't support non-python extensions.)
