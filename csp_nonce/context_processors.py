@@ -11,7 +11,18 @@ Usage:
 
 
 def nonce(request):
-    """ Pass the nonce cases to their respective template calls """
+    """ Pass the nonce cases to their respective template calls.
+
+    Args:
+        request (:obj:) Django request object
+
+    Returns:
+        bool: False in template if settings are not activated
+        dict:
+            script_nonce (str): Cryptographic nonce for use in <script> tags.
+            style_nonce (str): Cryptographic nonce for use in <style> tags.
+
+    """
     script = getattr(request, 'script_nonce', False)
     style = getattr(request, 'style_nonce', False)
 

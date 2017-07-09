@@ -9,7 +9,7 @@ try:
     from django.utils.deprecation import MiddlewareMixin
 except ImportError:
     class MiddlewareMixin(object):
-        """ Django 1.10 """
+        """ Django 1.10+ """
         pass
 
 
@@ -17,7 +17,13 @@ class CSPNonceMiddleware(MiddlewareMixin):
     """ Nonce Injection middleware for CSP. """
 
     def process_request(self, request):
-        """ Pack nonce hash for activated directive(s) into request """
+        """Django Middleware request processor.
+
+        Pack nonce hash for activated directive(s) into request.
+
+        Returns:
+            None
+        """
         csp_nonce_script = getattr(settings, 'CSP_NONCE_SCRIPT', False)
         csp_nonce_style = getattr(settings, 'CSP_NONCE_STYLE', False)
 
@@ -28,8 +34,13 @@ class CSPNonceMiddleware(MiddlewareMixin):
             request.style_nonce = generate_nonce()
 
     def process_response(self, request, response):
-            """ Append available nonce hashes to
-                their respective directives """
+            """Django Middleware response processor.
+
+            Append available nonce hashes to their respective directives
+
+            Returns:
+                None
+            """
             header = get_header(response)
 
             if not header:
