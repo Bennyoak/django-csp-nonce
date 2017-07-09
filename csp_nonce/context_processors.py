@@ -1,5 +1,4 @@
-"""
-Context processor for CSP nonce template injection.
+"""Context processor for CSP nonce template injection.
 
 Usage:
     Add the nonce context to any inline script or style tag.

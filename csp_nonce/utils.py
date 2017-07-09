@@ -43,7 +43,10 @@ def nonce_exists(response):
 
 
 def get_header(response):
-    """Check for CSP header type.
+    """Get the CSP header type.
+
+    This is basically a check for:
+        Content-Security-Policy or Content-Security-Policy-Report-Only
 
     Args:
         response (:obj:): Django response object
