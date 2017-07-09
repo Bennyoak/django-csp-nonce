@@ -1,13 +1,14 @@
 from __future__ import unicode_literals
 import base64
-import nacl.secret
-import nacl.utils
+import os
 
+# Number of random bytes in the nonce:
+NONCE_BYTES = 24
 
 def generate_nonce():
-    """ Return a unique base64 encoded nonce hash """
-    nonce = nacl.utils.random(nacl.secret.SecretBox.NONCE_SIZE)
-    return "{}".format(base64.b64encode(nonce))
+    """ Return a unique base64 encoded nonce hash."""
+    nonce = os.urandom(NONCE_BYTES)
+    return base64.b64encode(nonce).decode()
 
 
 def nonce_exists(response):
