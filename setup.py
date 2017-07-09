@@ -26,7 +26,6 @@ def read(*parts):
 
 install_requires = [
     'Django>=1.6,<1.11',
-    'pynacl==1.0.1'
 ]
 
 
