@@ -4,7 +4,7 @@ import codecs
 from setuptools import setup, find_packages
 
 
-version = '1.0b20'
+version = '1.0.0'
 
 
 if sys.argv[-1] == 'publish':
@@ -25,7 +25,7 @@ def read(*parts):
 
 
 install_requires = [
-    'Django>=1.6,<1.11',
+    'Django>=1.6',
 ]
 
 
@@ -50,7 +50,7 @@ setup(
     author_email='benny@twosensedesign.com',
     maintainer='Bennyoak',
     maintainer_email='benny@twosensedesign.com',
-    url='http://github.com/SpiderOak/django-csp-nonce',
+    url='http://github.com/Bennyoak/django-csp-nonce',
     license='MPL 2.0',
     packages=find_packages(),
     install_requires=install_requires,
@@ -60,7 +60,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Programming Language :: Python',
         'License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)',
