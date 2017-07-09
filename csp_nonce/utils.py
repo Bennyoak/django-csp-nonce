@@ -12,7 +12,15 @@ def generate_nonce():
 
 
 def nonce_exists(response):
-    """ Check for preexisting nonce in style and script """
+    """Check for preexisting nonce in style and script.
+
+     Args:
+         response (:obj:): Django response object
+
+     Returns:
+         nonce_found (dict): Dictionary of nonces found
+         has_nonce (bool): True if any nonce has been found
+     """
     try:
         csp = response['Content-Security-Policy']
     except KeyError:
@@ -36,7 +44,20 @@ def nonce_exists(response):
 
 
 def get_header(response):
-    """ Check for CSP header type. Return dict with header and values """
+    """Get the CSP header type.
+
+    This is basically a check for:
+        Content-Security-Policy or Content-Security-Policy-Report-Only
+
+    Args:
+        response (:obj:): Django response object
+
+    Returns:
+         dict:
+            name: CPS header policy. i.e. Report-Only or not
+            csp: CSP directives associated with the header
+            bool: False if neither policy header is found
+    """
     policies = [
         "Content-Security-Policy",
         "Content-Security-Policy-Report-Only"
