@@ -102,7 +102,25 @@ Important Changes
 -----------------
 
 - 1.0
+
   - Out of beta!
   - PyNacl is no longer a dependency.  (Moving forward the aim is to
     stay compatible with environments such as Google App Engine which
     don't support non-python extensions.)
+
+
+Running Tests
+-------------
+
+Use ``tox`` to run the tests against multiple versions of Python that
+you have installed and multiple versions of Django.  Please make sure
+that you run your tests against at least Python 2.7 and Python 3.5.
+
+.. code:: bash
+
+    virtualenv venv
+    . ./venv/bin/activate
+
+    pip install tox
+
+    tox
