@@ -1,4 +1,4 @@
-Django-CSP-Nonce (beta)
+Django-CSP-Nonce 1.0.0
 =======================
 
 |Build Status|
